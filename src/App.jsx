@@ -4,7 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { TaskCategoryContext } from "./contexts/taskContext";
 import { categories } from "./data/taskData";
 import Pages from "./Pages";
-import { initialState, TaskReducer } from "./reducers/taskReducer";
+import { initialState, TaskReducer } from "./reducers/taskReducers";
 
 export default function App() {
   const [state, dispatch] = useReducer(TaskReducer, initialState);
