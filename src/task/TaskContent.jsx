@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { FaPlusCircle } from "react-icons/fa";
 import { HiSortDescending } from "react-icons/hi";
+import { toast } from "react-toastify";
 import { TaskCategoryContext } from "../contexts/taskContext";
 import { categoriesColor } from "../data/taskData";
 import AddEditTaskModal from "./AddEditTaskModal";
@@ -14,6 +15,7 @@ const initialTask = {
 };
 function TaskContent() {
   const [showAddEditTask, setShowAddEditTask] = useState(false);
+  const [isAsc, setIsAsc] = useState(false);
   //   const [groupedTasks, setGroupedTask] = useState([]);
   const [isAdd, setIsAdd] = useState(true);
   const [updateTask, setUpdateTask] = useState(initialTask);
@@ -43,6 +45,25 @@ function TaskContent() {
     setUpdateTask(initialTask);
   }
 
+  function handleSorting(cat, IsAscending) {
+    setIsAsc(IsAscending);
+    dispatch({
+      type: "SORT",
+      payload: {
+        category: cat,
+        isAsc: IsAscending,
+      },
+    });
+    toast.success(
+      `Tasks are sorting ${
+        IsAscending ? "ascending" : "desecending"
+      } order of ${cat} category`,
+      {
+        position: "bottom-right",
+      }
+    );
+  }
+
   return (
     <>
       {showAddEditTask && (
@@ -60,7 +81,9 @@ function TaskContent() {
             <button
               className="flex items-center rounded-md bg-gray-700 px-4 py-2 text-white"
               onClick={() => (
-                setShowAddEditTask(true), setUpdateTask(initialTask)
+                setShowAddEditTask(true),
+                setUpdateTask(initialTask),
+                setIsAdd(true)
               )}
             >
               <FaPlusCircle /> Add
@@ -83,7 +106,9 @@ function TaskContent() {
                     <h3 className="text-lg font-semibold">
                       {cat} {`(${tasks.length})`}
                     </h3>
-                    <HiSortDescending />
+                    <button onClick={() => handleSorting(cat, !isAsc)}>
+                      <HiSortDescending />
+                    </button>
                   </div>
                   <div>
                     {tasks.length > 0 ? (

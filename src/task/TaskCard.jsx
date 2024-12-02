@@ -1,13 +1,18 @@
 import { FaPen } from "react-icons/fa";
 import { FaRegTrashCan } from "react-icons/fa6";
+import { toast } from "react-toastify";
 import { dateFormatting } from "../utils/dateFormatting";
 
 function TaskCard({ task, dispatch, onEditTask }) {
   function handleDelete(e) {
     e.preventDefault();
+
     dispatch({
       type: "DELETE",
       payload: task,
+    });
+    toast.error(`Task '${task.taskName}' deleted successfully`, {
+      position: "bottom-right",
     });
   }
   return (

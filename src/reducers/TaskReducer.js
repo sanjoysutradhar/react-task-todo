@@ -44,6 +44,26 @@ const TaskReducer = (state, action) => {
             })
           : state.mainTasks,
       };
+    case "SORT":
+      return {
+        ...state,
+        tasks: [
+          // Keep tasks from other categories as is
+          ...state.tasks.filter(
+            (task) => task.category !== action.payload.category
+          ),
+
+          // Sort tasks in the matching category
+          ...state.tasks
+            .filter((task) => task.category === action.payload.category)
+            .sort(
+              (a, b) =>
+                action.payload.isAsc
+                  ? new Date(a.dueDate) - new Date(b.dueDate) // Ascending
+                  : new Date(b.dueDate) - new Date(a.dueDate) // Descending
+            ),
+        ],
+      };
 
     default:
       return state;

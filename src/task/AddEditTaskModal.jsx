@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { TaskCategoryContext } from "../contexts/taskContext";
+import { toast } from "react-toastify";
 
 function AddEditTaskModal({ onClose, isAdd, updateTask, onAddUpdate }) {
   const [validationErrors, setValidationErrors] = useState({});
@@ -37,8 +38,14 @@ function AddEditTaskModal({ onClose, isAdd, updateTask, onAddUpdate }) {
     onClose();
     if (isAdd) {
       onAddUpdate("ADD", task);
+      toast.success(`Task '${task.taskName}' added successfully`, {
+        position: "bottom-right",
+      });
     } else {
       onAddUpdate("UPDATE", task);
+      toast.success(`Task '${task.taskName}' updated successfully`, {
+        position: "bottom-right",
+      });
     }
   };
 
@@ -48,7 +55,7 @@ function AddEditTaskModal({ onClose, isAdd, updateTask, onAddUpdate }) {
         <div className="w-full max-w-[420px] sm:max-w-[600px] lg:max-w-[984px] p-4 bg-gray-800 rounded-lg shadow-xl">
           <div className="p-6">
             <h2 className="mb-6 text-2xl font-bold text-green-400">
-              Create Task
+              {isAdd ? "Create" : "Edit"} Task
             </h2>
             <form>
               <div className="mb-4">
@@ -161,7 +168,7 @@ function AddEditTaskModal({ onClose, isAdd, updateTask, onAddUpdate }) {
                   className="rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-gray-800"
                   onClick={handleSave}
                 >
-                  Create Task
+                  {isAdd ? "Create" : "Update"} Task
                 </button>
               </div>
             </form>
