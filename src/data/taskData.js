@@ -55,12 +55,12 @@ const tasks = [
 
 // export { tasksGroupByCategory };
 
-function groupTasksByCategory(tasks) {
-  return tasks.reduce((groups, task) => {
-    (groups[task.category] ||= []).push(task); // Use logical OR assignment
-    return groups;
-  }, {});
-}
+// function groupTasksByCategory(tasks) {
+//   return tasks.reduce((groups, task) => {
+//     (groups[task.category] ||= []).push(task); // Use logical OR assignment
+//     return groups;
+//   }, {});
+// }
 const categoriesColor = {
   "To-Do": "bg-indigo-600",
   "On Progress": "bg-yellow-500",
@@ -69,6 +69,6 @@ const categoriesColor = {
 };
 
 const categories = ["To-Do", "On Progress", "Done", "Revised"];
-const groupedTasks = groupTasksByCategory(tasks);
+// const groupedTasks = groupTasksByCategory(tasks);
 
-export { categories, categoriesColor, groupedTasks, tasks };
+export { categories, categoriesColor, tasks };

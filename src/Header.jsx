@@ -1,4 +1,20 @@
+import { useContext, useState } from "react";
+import { TaskCategoryContext } from "./contexts/taskContext";
+
 function Header() {
+  const [search, setSearch] = useState("");
+  const { dispatch } = useContext(TaskCategoryContext);
+
+  function handleSearch(e) {
+    let value = e.target.value;
+    setSearch(value);
+    dispatch({
+      type: "SEARCH",
+      payload: {
+        taskName: value.toLowerCase(),
+      },
+    });
+  }
   return (
     <header className="flex items-center justify-between bg-gray-800 p-4">
       <button className="lg:hidden">
@@ -21,6 +37,9 @@ function Header() {
         <input
           type="text"
           placeholder="Search here"
+          name="search"
+          value={search}
+          onChange={handleSearch}
           className="w-full max-w-xl rounded-full bg-gray-700 px-4 py-2 text-white focus:outline-none"
         />
       </div>
